@@ -2,7 +2,7 @@ extends layout
 
 block content
   nav.sb-topnav.navbar.navbar-expand.navbar-dark.bg-dark
-    a.navbar-brand(href='index.html') Start Bootstrap
+    a.navbar-brand(href='index.html') Red de bicicletas
     button#sidebarToggle.btn.btn-link.btn-sm.order-1.order-lg-0(href='#')
       i.fas.fa-bars
     // Navbar Search
@@ -31,7 +31,7 @@ block content
             a.nav-link(href='index.html')
               .sb-nav-link-icon
                 i.fas.fa-tachometer-alt
-              |                                 Dashboard
+              |                                 Inicio
             .sb-sidenav-menu-heading Interface
             a.nav-link.collapsed(href='#' data-toggle='collapse' data-target='#collapseLayouts' aria-expanded='false' aria-controls='collapseLayouts')
               .sb-nav-link-icon
@@ -84,9 +84,9 @@ block content
     #layoutSidenav_content
       main
         .container-fluid
-          h1.mt-4 Dashboard
+          h1.mt-4 Inicio
           ol.breadcrumb.mb-4
-            li.breadcrumb-item.active Dashboard
+            li.breadcrumb-item.active Mapa
           .row
             .col-xl-3.col-md-6
               .card.bg-primary.text-white.mb-4
@@ -116,21 +116,7 @@ block content
                   a.small.text-white.stretched-link(href='#') View Details
                   .small.text-white
                     i.fas.fa-angle-right
-          .row
-            .col-xl-6
-              .card.mb-4
-                .card-header
-                  i.fas.fa-chart-area.mr-1
-                  |                                         Area Chart Example
-                .card-body
-                  canvas#myAreaChart(width='100%' height='40')
-            .col-xl-6
-              .card.mb-4
-                .card-header
-                  i.fas.fa-chart-bar.mr-1
-                  |                                         Bar Chart Example
-                .card-body
-                  canvas#myBarChart(width='100%' height='40')
+          #main_map
           .card.mb-4
             .card-header
               i.fas.fa-table.mr-1
@@ -577,4 +563,4 @@ block content
   script(src='https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js' crossorigin='anonymous')
 
   script(src='/assets/demo/datatables-demo.js')
-
+  script(src='/javascripts/map.js')
