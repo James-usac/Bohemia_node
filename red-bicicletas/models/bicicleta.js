@@ -37,8 +37,8 @@ Bicicleta.findById = function(aBiciId){
 }
 
 //creando objetos
-var a = new Bicicleta(1,'rojo','urbana',[41.38389905,2.12592250075175]);
-var b = new Bicicleta(2,'azul','urbana',[41.38489905,2.12592250075175]);
+var a = new Bicicleta(1,'rojo','urbana',[41.38089905,2.12292250075175]);
+var b = new Bicicleta(2,'azul','urbana',[41.38189905,2.12392250075175]);
 //agregando objetos
 Bicicleta.add(a);
 Bicicleta.add(b);

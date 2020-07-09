@@ -9,6 +9,17 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     accessToken: 'your.mapbox.access.token'
 }).addTo(mymap);
 
-L.marker([41.38089905,2.12292250075175]).addTo(mymap);
-L.marker([41.38189905,2.12392250075175]).addTo(mymap);
-L.marker([41.38289905,2.12492250075175]).addTo(mymap);
+//L.marker([41.38089905,2.12292250075175]).addTo(mymap);
+
+
+//lamada a ajax , solicitud a mi api
+$.ajax({
+    dataType: "json",
+    url: "api/bicicletas",
+    success: function(result){
+        console.log(result);
+        result.bicicletas.forEach(function(bici){
+            L.marker(bici.ubicacion, {title: bici.id}).addTo(mymap);
+        });
+    }
+})
