@@ -36,12 +36,14 @@ Bicicleta.findById = function(aBiciId){
         throw new Error(`No exite una bicicleta con el id ${aBiciId}`);
 }
 
+/*
 //creando objetos
 var a = new Bicicleta(1,'rojo','urbana',[41.38089905,2.12292250075175]);
 var b = new Bicicleta(2,'azul','urbana',[41.38189905,2.12392250075175]);
 //agregando objetos
 Bicicleta.add(a);
 Bicicleta.add(b);
+*/
 
 //Exportando modelo para que lo puedan importar
 module.exports = Bicicleta;
