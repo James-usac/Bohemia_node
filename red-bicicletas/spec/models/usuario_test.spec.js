@@ -3,6 +3,8 @@ var mongoose = require('mongoose');
 var Reserva = require('../../models/reserva');
 var Usuario = require('../../models/usuario');
 
+ 
+
 describe('Probando usuarios ...', function(){
     beforeEach(function(done){
         
@@ -39,13 +41,13 @@ describe('Probando usuarios ...', function(){
 
     describe('Al momento de reservar',() => {
 
-        Mailer.sendEmail();
-        const codeP = 3890;
+
+        
         it('debe existir la reserva',(done) => {
-            const usuario = new Usuario({nombre : 'Edison Lopera'});
+            const usuario = new Usuario({nombre : 'James Melgar'});
             usuario.save();
             
-            const bicicleta = new Bicicleta({code : codeP, color : 'Borgona', modelo : "Super bike"}); 
+            const bicicleta = new Bicicleta({code : 1, color : 'Rojo', modelo : "urbana"}); 
             bicicleta.save();
 
             var hoy = new Date();
@@ -62,7 +64,7 @@ describe('Probando usuarios ...', function(){
                     console.log(cont);
                     expect(res.length).toBe(1);
                     expect(cont.diasDeReserva()).toBe(2);
-                    expect(cont.bicicleta.code).toBe(codeP);
+                    expect(cont.bicicleta.code).toBe(1);
                     expect(cont.usuario.nombre).toBe(usuario.nombre);
                     done();
                 });
