@@ -63,6 +63,11 @@ Para correr la pruebas usamos el comando
 
 `npm test`
 
-##Mongodb 👽
+## Mongodb 👽
 
 Para el ODM/ORM utilizamos **Mongoose**
+
+Para el manejo de fechas instalamos **moment**
+
+`npm install moment --save`
+

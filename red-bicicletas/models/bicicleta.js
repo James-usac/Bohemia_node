@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+
+
 var BicicletaSchema = new Schema({
     //id es palabra reservada en mongoose
     code: Number,
@@ -33,5 +35,17 @@ BicicletaSchema.statics.allBicis = function(cb){
     return this.find({},cb);
 }
 
+//el cb es callback no da el resultado
+BicicletaSchema.statics.add = function(aBici, cb){
+    this.create(aBici,cb);
+}
+
+BicicletaSchema.statics.findByCode = function(aCode, cb){
+    return this.findOne({code: aCode},cb);
+}
+
+BicicletaSchema.statics.removeByCode = function(aCode, cb){
+    return this.deleteOne({code: aCode},cb);
+}
 //le decimos que el nombre es Bicicleta
 module.exports = mongoose.model('Bicicleta',BicicletaSchema);

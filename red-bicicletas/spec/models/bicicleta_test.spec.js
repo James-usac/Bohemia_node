@@ -42,6 +42,58 @@ describe('Testing Bicicletas',function(){
             })
         });
     });
+
+    describe('Bicicleta.add', ()=> {
+        it('agregar solo una bicicleta', (done) => {
+            var aBici = new Bicicleta({code: 1, color: "Verde", modelo:"Urbana"});
+            Bicicleta.add(aBici,function(err, newBici){
+                if (err) console.log(err);
+                Bicicleta.allBicis(function(err,bicis){
+                    expect(bicis.length).toEqual(1);
+                    expect(bicis[0].code).toEqual(aBici.code);
+
+                    done();
+                })
+            })
+        });
+    });
+
+    describe('Bicicleta.findByCode', ()=> {
+        it('Devolver bici con code 1', (done) => {
+            var aBici = new Bicicleta({code: 1, color: "Verde", modelo:"Urbana"});
+            Bicicleta.add(aBici,function(err, newBici){
+                if (err) console.log(err);
+
+                var aBici2 = new Bicicleta({code: 2, color: "rojo", modelo:"Urbana"});
+                Bicicleta.add(aBici2,function(err, newBici){
+                    if (err) console.log(err);
+                    Bicicleta.findByCode(1, function(err,tarjetbicis){
+                        expect(tarjetbicis.code).toEqual(aBici.code);
+                        expect(tarjetbicis.color).toEqual(aBici.color);
+                        done();
+                    });
+                });
+            })
+        });
+    });
+
+    describe('Bicicleta.removeByCode', ()=> {
+        it('Eliminar bici 1', (done) => {
+            var aBici = new Bicicleta({code: 1, color: "Verde", modelo:"Urbana"});
+            Bicicleta.add(aBici,function(err, newBici){
+                if (err) console.log(err);
+                Bicicleta.removeByCode(1, function(err,tarjetbicis){
+                    if (err) console.log(err);
+                    Bicicleta.allBicis(function(err, bicis){
+                        expect(bicis.length).toBe(0);
+                        done();
+                    })
+                });
+            
+            })
+        });
+    });
+
 });
 
 /*
