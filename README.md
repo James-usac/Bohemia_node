@@ -71,3 +71,6 @@ Para el manejo de fechas instalamos **moment**
 
 `npm install moment --save`
 
+Instalaciar unique para mongodb
+
+`npm install mongoose-unique-validator --save`

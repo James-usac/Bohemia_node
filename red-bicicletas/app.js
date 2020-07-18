@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var bicicletasRouter = require('./routes/bicicletas');
 //api
 var bicicletasAPIRouter = require('./routes/api/bicicletas');
+var mailer = require('./mailer/mailer');
 
 var app = express();
 
@@ -21,6 +22,9 @@ mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDb connection error: '));
 
+mailer.createTestAccount('error',function(err, account){
+  console.log('Iniciando mensaje')
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

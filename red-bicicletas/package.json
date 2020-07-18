@@ -8,6 +8,7 @@
     "test": "jasmine"
   },
   "dependencies": {
+    "brcypt": "^1.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
@@ -15,7 +16,9 @@
     "mailer": "^0.6.7",
     "moment": "^2.27.0",
     "mongoose": "^5.9.23",
+    "mongoose-unique-validator": "^2.0.3",
     "morgan": "~1.9.1",
+    "nodemailer": "^6.4.10",
     "pug": "2.0.0-beta11",
     "request": "^2.88.2"
   },
