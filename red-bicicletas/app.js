@@ -6,9 +6,12 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var usuariosRouter = require('./routes/usuarios');
 var bicicletasRouter = require('./routes/bicicletas');
+var tokenRouter = require('./routes/token');
 //api
 var bicicletasAPIRouter = require('./routes/api/bicicletas');
+//var usuarioAPIRouter = require('./routes/api/')
 var mailer = require('./mailer/mailer');
 
 var app = express();
@@ -37,10 +40,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/bicicletas', bicicletasRouter);
+app.use('/usuarios', usuariosRouter);
+app.use('/token', tokenRouter);
+//app.use('/bicicletas', bicicletasRouter);
 //api
+app.use('/bicicletas', bicicletasRouter);
 app.use('/api/bicicletas',bicicletasAPIRouter);
+//app.use('/api/usuarios',usuarioAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

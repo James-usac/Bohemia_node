@@ -2,13 +2,18 @@ var mongoose = require('mongoose');
 var Reserva = require('./reserva');
 var uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
-const brcypt = require('bcrypt')
+const brcypt = require('bcrypt');
+const crypto = require('crypto');
 //aleatoridad en la encryptacion
 const saltRouds = 10; 
 
+const Token = require('../models/token')
+const mailer = require('../mailer/mailer')
+
 const validateEmail = function(email){
-    const re = '/^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/'
-    return re.test(email);
+    const re = '/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/'
+    //return RegExp.test(email);
+    return true;
 }
 
 var usuarioShema = new Schema({ 
@@ -24,7 +29,7 @@ var usuarioShema = new Schema({
         lowercase: true,
         unique: true,
         validate: [validateEmail, 'Por favor, ingrese un email valido'],
-        match: [/^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/]
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]
     },
     password: {
         type: String,
@@ -60,6 +65,26 @@ usuarioShema.methods.reservar = function(biciId, desde, hasta, cb){
     var reserva = new Reserva({usuario: this._id, bicicleta:biciId, desde: desde, hasta: hasta});
     console.log(reserva);
     reserva.save(cb);
+}
+
+usuarioShema.methods.enviar_email_bienvenida = function(cb) {
+    const token = new Token({ _userId: this.id, token: crypto.randomBytes(16).toString('hex')});
+    const email_destination = this.email;
+    token.save(function (err){
+        if (err) {  return console.log(err.nessage); } 
+
+        const mailOptions = {
+            from: 'no-reply@redbicicletas.com',
+            to: email_destination,
+            subject: 'Verificación de cuenta',
+            text: 'Hola, \n\n' + 'Por favor, para verificar su cuenta haga click en este link: \n' + 'http://localhost:500' + '\/token/confirmation\/' + token.token + '.\n'
+       };
+       
+       mailer.sendMail(mailOptions, function (err) {
+           if (err) { return console.log(err.message); } 
+           console.log('A verification email has been sent to' + email_destination + '.');
+        });
+   });
 }
 
 module.exports = mongoose.model('Usuario',usuarioShema);
