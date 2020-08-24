@@ -9,6 +9,7 @@ const mailconfig = {
     }
 };
 
+
 // Generate SMTP service account from ethereal.email
 nodemailer.createTestAccount((err, account) => {
     if (err) {
@@ -49,5 +50,6 @@ nodemailer.createTestAccount((err, account) => {
     });
 });
 
+
 module.exports = nodemailer.createTestAccount(mailconfig);
-module.exports = nodemailer;
+//module.exports = nodemailer;

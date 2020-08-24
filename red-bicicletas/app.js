@@ -17,7 +17,7 @@ var authAPIRouter = require('./routes/api/auth')
 //api
 var bicicletasAPIRouter = require('./routes/api/bicicletas');
 //var usuarioAPIRouter = require('./routes/api/')
-var mailer = require('./mailer/mailer');
+//var mailer = require('./mailer/mailer');
 //motor de seccion, Guardar la seccion en memoria
 const store = new session.MemoryStore;
 const Usuariox = require('./models/usuario');
@@ -43,10 +43,6 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDb connection error: '));
-/*
-mailer.createTestAccount('error',function(err, account){
-  console.log('Iniciando mensaje')
-});*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

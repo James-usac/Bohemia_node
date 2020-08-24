@@ -99,7 +99,7 @@ usuarioShema.methods.enviar_email_bienvenida = function(cb) {
             from: 'no-reply@redbicicletas.com',
             to: email_destination,
             subject: 'Verificación de cuenta',
-            text: 'Hola, \n\n' + 'Por favor, para verificar su cuenta haga click en este link: \n' + 'http://localhost:500' + '\/token/confirmation\/' + token.token + '.\n'
+            text: 'Hola, \n\n' + 'Por favor, para verificar su cuenta haga click en este link: \n' + 'http://localhost:3000' + '\/token/confirmation\/' + token.token + '.\n'
        };
        
        mailer.sendMail(mailOptions, function (err) {
