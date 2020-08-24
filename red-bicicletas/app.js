@@ -17,6 +17,8 @@ var bicicletasAPIRouter = require('./routes/api/bicicletas');
 var mailer = require('./mailer/mailer');
 //motor de seccion, Guardar la seccion en memoria
 const store = new session.MemoryStore;
+const Usuariox = require('./models/usuario');
+const Token = require('./models/token');
 
 var app = express();
 app.use(session({ 
@@ -75,12 +77,64 @@ app.get('/logout', function(req, res){
   res.redirect('/')
 });
 
+//olvide password
+app.get('/forgotPassword', function(req, res){
+  res.render('session/forgotPassword');
+});
+
+app.post('/forgotPassword', function(req, res){
+  usuario.findOne({ email: req.body.email }, function (err, usuario) {
+      if(!usuario) {
+        return res.render('session/forgotPassword', {info: {message: 'No exite correo'}});
+      }
+
+  usuario.resetPassword(function(err){
+    if(err) return next(err);
+    console.log('session/session/forgotPassword')
+  });
+
+  res.render('session/forgotPasswordMessage');
+});
+});
+
+app.post('/resetPassword/:token', function(req, res, next){
+  Token.findOne({ token: req.params.token }, function(err, token){
+    if(!token) return res.status(400).send({ type: 'not-verified', 
+    msg: "No exite el usuariario asociado al token. Verifique que su token no a sido aspirado"});
+  
+    Usuario.findOne(token._userId, function(err, usuario){
+      if(!usuario) return res.status().res.status(400).send({ msg: 'No exite usuario asociado al token'});
+      res.render('session/resetPassword', {error: {}, usuario: usuario});
+
+    });
+  });
+});
+
+app.post('/resetPassword', function(req, res){
+  if(req.body.password != req.body.confirm_password){
+    res.render('session/resetPassword', {errors: {confirm_password: {message:'No coiciden los passwords'
+  }},
+  usuario: new Usuario({email: req.body.email})});
+    return;
+  }
+  Usuario.findOne({email: req.body.email}, function(err, usuario){
+    usuario.password = req.body.password;
+    usuario.save(function(err){
+      if(err){
+        res.render('session/resetPassword', {errors: err.errors, usuario: new Usuario({email: req.body.email})});
+      }else{
+        res.redirect('/login');
+      }
+    });
+  });
+});
+
 app.use('/', indexRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/token', tokenRouter);
 //app.use('/bicicletas', bicicletasRouter);
 //api
-app.use('/bicicletas', bicicletasRouter);
+app.use('/bicicletas',loggedIn ,bicicletasRouter);
 app.use('/api/bicicletas',bicicletasAPIRouter);
 //app.use('/api/usuarios',usuarioAPIRouter);
 
@@ -99,5 +153,14 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+function loggedIn(req, res, next){
+  if(req.user){
+    next();
+  } else{
+     console.log('usuario sin logearse');
+     res.redirect('/login');
+  }
+}
 
 module.exports = app;
