@@ -74,3 +74,21 @@ Para el manejo de fechas instalamos **moment**
 Instalaciar unique para mongodb
 
 `npm install mongoose-unique-validator --save`
+
+
+##AUTETIFICACION
+
+http://www.passportjs.org/
+
+ `npm install passport`
+ 
+ manejo de expresiones con Express
+ `npm install express-session'
+ 
+ Para trabajar con los mails
+ `npm install nodemailer`
+ 
+ ETheral manejo de email
+ 
+ https://ethereal.email/
+ 

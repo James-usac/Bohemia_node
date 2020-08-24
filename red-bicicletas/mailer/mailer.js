@@ -1,5 +1,14 @@
 const nodemailer = require('nodemailer');
 
+const mailconfig = {
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'kelley.schuster60@ethereal.email',
+        pass: 'QvGsCaq8JW2znAMz9N'
+    }
+};
+
 // Generate SMTP service account from ethereal.email
 nodemailer.createTestAccount((err, account) => {
     if (err) {
@@ -40,4 +49,5 @@ nodemailer.createTestAccount((err, account) => {
     });
 });
 
+module.exports = nodemailer.createTestAccount(mailconfig);
 module.exports = nodemailer;
