@@ -1,4 +1,4 @@
 red-bicicletas/node_modules/
 red-bicicletas/
-node_modules
-startbootstrap-sb-admin-gh-pages
+.\node_modules\
+.\startbootstrap-sb-admin-gh-pages
