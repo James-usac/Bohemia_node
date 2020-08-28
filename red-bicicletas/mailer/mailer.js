@@ -1,15 +1,35 @@
 const nodemailer = require('nodemailer');
 
-const mailconfig = {
-    host: 'smtp.ethereal.email',
-    port: 587,
+const mailConfig = {
+    host: 'imap.gmail.com',
+    port: 465,
     auth: {
-        user: 'kelley.schuster60@ethereal.email',
-        pass: 'QvGsCaq8JW2znAMz9N'
+        user: 'ajedrezamigos@gmail.com',
+        pass: 'WilsonOscarJames3'
     }
 };
 
+module.exports = nodemailer.createTransport(mailConfig);
 
+
+/*
+993
+const nodemailer = require('nodemailer');
+
+const mailConfig = {
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'stephen65@ethereal.email',
+        pass: 'HeNRUWFGB1mmmmVzXS'
+    }
+};
+
+module.exports = nodemailer.createTransport(mailConfig);
+
+*/
+
+/*
 // Generate SMTP service account from ethereal.email
 nodemailer.createTestAccount((err, account) => {
     if (err) {
@@ -49,7 +69,7 @@ nodemailer.createTestAccount((err, account) => {
         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
     });
 });
+*/
 
-
-module.exports = nodemailer.createTestAccount(mailconfig);
+//module.exports = nodemailer.createTestAccount(mailconfig);
 //module.exports = nodemailer;

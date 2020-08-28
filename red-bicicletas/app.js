@@ -3,23 +3,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const passport = require('./config/passport');
-const session = require('express-session');
-const jwt = require('jsonwebtoken');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var usuariosRouter = require('./routes/usuarios');
 var bicicletasRouter = require('./routes/bicicletas');
 var tokenRouter = require('./routes/token');
 var authAPIRouter = require('./routes/api/auth')
 
-//api
-var bicicletasAPIRouter = require('./routes/api/bicicletas');
-//var usuarioAPIRouter = require('./routes/api/')
-//var mailer = require('./mailer/mailer');
+const passport = require('./config/passport');
+const session = require('express-session');
 //motor de seccion, Guardar la seccion en memoria
 const store = new session.MemoryStore;
+const jwt = require('jsonwebtoken');
+
+//api
+var bicicletasAPIRouter = require('./routes/api/bicicletas');
+
 const Usuariox = require('./models/usuario');
 const Token = require('./models/token');
 
@@ -34,9 +33,9 @@ app.use(session({
   resave: 'true',
   secret: 'red_biciletas **** cualquier cosa'
 }));
+
 var mongoose = require('mongoose');
 const usuario = require('./models/usuario');
-
 // mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
 var mongoDB = "mongodb://localhost/red_bicicletas";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -97,17 +96,15 @@ app.post('/forgotPassword', function(req, res){
 });
 });
 
-app.post('/resetPassword/:token', function(req, res, next){
-  Token.findOne({ token: req.params.token }, function(err, token){
-    if(!token) return res.status(400).send({ type: 'not-verified', 
-    msg: "No exite el usuariario asociado al token. Verifique que su token no a sido aspirado"});
-  
-    Usuario.findOne(token._userId, function(err, usuario){
-      if(!usuario) return res.status().res.status(400).send({ msg: 'No exite usuario asociado al token'});
-      res.render('session/resetPassword', {error: {}, usuario: usuario});
+app.get('/resetPassword/:token', function( req, res, next ){
+  Token.findOne({token: req.params.token}, function(err,token){
+  if(!token) return res.status(400).send({type:'not-verified',msg:'No existe usuario asociado al token. Verifique que su token no haya expirado'});
 
-    });
+  usuario.findById(token._userId, function( err, usuario ){
+    if(err) return res.status(400).send({msg: 'No existe usuario asociado al token'});
+    res.render('session/resetPassword', {errors:{},usuario:usuario});
   });
+  })    
 });
 
 app.post('/resetPassword', function(req, res){
@@ -117,7 +114,7 @@ app.post('/resetPassword', function(req, res){
   usuario: new Usuario({email: req.body.email})});
     return;
   }
-  Usuario.findOne({email: req.body.email}, function(err, usuario){
+  usuario.findOne({email: req.body.email}, function(err, usuario){
     usuario.password = req.body.password;
     usuario.save(function(err){
       if(err){
@@ -132,12 +129,11 @@ app.post('/resetPassword', function(req, res){
 app.use('/', indexRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/token', tokenRouter);
-//app.use('/bicicletas', bicicletasRouter);
-//api
+
 app.use('/api/auth', authAPIRouter);
 app.use('/bicicletas',loggedIn ,bicicletasRouter);
 app.use('/api/bicicletas',validarUsuario, bicicletasAPIRouter);
-//app.use('/api/usuarios',usuarioAPIRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
