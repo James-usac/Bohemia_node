@@ -36,8 +36,8 @@ app.use(session({
 
 var mongoose = require('mongoose');
 const usuario = require('./models/usuario');
-// mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
-var mongoDB = "mongodb://localhost/red_bicicletas";
+var mongoDB = "mongodb://35.222.63.57:27017/?compressors=disabled&gssapiServiceName=mongodb"
+//var mongoDB = "mongodb://localhost/red_bicicletas";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
