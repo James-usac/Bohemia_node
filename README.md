@@ -97,3 +97,8 @@ http://www.passportjs.org/
  npm install dotenv
 
  ```
+
+ Para sendgrid
+ ```node
+ npm install nodemailer-sendgrid-transport
+ ```
