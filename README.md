@@ -92,3 +92,8 @@ http://www.passportjs.org/
  
  https://ethereal.email/
  
+ Para variables de entorno
+ ```node
+ npm install dotenv
+
+ ```

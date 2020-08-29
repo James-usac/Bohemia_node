@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -36,8 +37,9 @@ app.use(session({
 
 var mongoose = require('mongoose');
 const usuario = require('./models/usuario');
-var mongoDB = "mongodb://35.222.63.57:27017/?compressors=disabled&gssapiServiceName=mongodb"
-//var mongoDB = "mongodb://localhost/red_bicicletas";
+
+var mongoDB = process.env.MONGO_URI;
+
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
