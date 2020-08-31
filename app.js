@@ -175,4 +175,24 @@ function validarUsuario(req, res, next){
   });
 }
 
+app.use('/privacy_policy', function(req, res){;
+  res.sendFile('public/policy_privacy.html');
+});
+
+app.use('/google9175166cc36ab553', function(req, res) {
+  res.sendFile('public/google9175188cc36ab883.html');
+});
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: [
+          'https://www.googleapis.com/auth/plus.login',
+          'https://www.googleapis.com/auth/plus.profile.emails.read', 'profile','email',],}));
+
+app.get('/auth/google/callback',passport.authenticate('google', {
+      successRedirect: '/',
+      failureRedirect: '/error',
+  })
+);
+
+
 module.exports = app;
