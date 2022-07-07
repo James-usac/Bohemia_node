@@ -18,7 +18,7 @@
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "mailer": "^0.6.7",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.9.23",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "~1.9.1",
